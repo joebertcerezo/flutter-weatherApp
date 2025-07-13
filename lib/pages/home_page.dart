@@ -10,7 +10,7 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  final _weatherService = WeatherService("7610f22bfdb260610a97498193f1da4c");
+  final _weatherService = WeatherService();
   Weather? _weather;
 
   _fetchWeather() async {
