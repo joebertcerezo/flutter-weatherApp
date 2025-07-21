@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:lottie/lottie.dart';
 import 'package:weather_app/models/weather.dart';
 import 'package:weather_app/service/weather_service.dart';
 
@@ -26,6 +27,27 @@ class _HomePageState extends State<HomePage> {
     }
   }
 
+  String getWeatherAnimation(String? mainCondition) {
+    switch (mainCondition) {
+      case 'Clouds':
+        return 'assets/clouds.json';
+      case 'Thunderstorm':
+        return 'assets/thunderstorm.json';
+      case 'Drizzle':
+        return 'assets/drizzle.json';
+      case 'Rain':
+        return 'assets/rain.json';
+      case 'Snow':
+        return 'assets/snow.json';
+      case 'Atmosphere':
+        return 'assets/atmosphere.json';
+      case 'Clear':
+        return 'assets/clear.json';
+      default:
+        throw Exception("Invalid Main Condition");
+    }
+  }
+
   @override
   void initState() {
     super.initState();
@@ -37,13 +59,17 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text(_weather?.cityName ?? ""),
-            Text(_weather?.mainCondition ?? ""),
-          ],
-        ),
+        child: _weather == null
+            ? CircularProgressIndicator()
+            : Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(_weather?.cityName ?? ""),
+                  Lottie.asset(getWeatherAnimation(_weather?.mainCondition)),
+                  Text("${_weather?.temperature.round()} °C"),
+                  Text(_weather?.mainCondition ?? ""),
+                ],
+              ),
       ),
     );
   }
