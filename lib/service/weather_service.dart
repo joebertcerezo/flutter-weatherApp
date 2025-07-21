@@ -32,11 +32,14 @@ class WeatherService {
     Position position = await Geolocator.getCurrentPosition(
       locationSettings: LocationSettings(accuracy: LocationAccuracy.high),
     );
+    
 
     List<Placemark> placemarks = await placemarkFromCoordinates(
       position.latitude,
       position.longitude,
     );
+
+    print("Placemarks: ${placemarks}");
 
     return placemarks[0].locality ?? "";
   }
